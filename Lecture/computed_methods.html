@@ -1,0 +1,63 @@
+<html xmlns:v-on="http://www.w3.org/1999/xhtml">
+    <head>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    </head>
+    <!--아래 코드는 vue.js에서 computed와 Method의 동작결과를 비교하기 위한 것이다. -->
+    <body>
+        <div id="app">
+            <button v-on:click="counter++">Increase</button>
+            <button v-on:click="counter--">Decrease</button>
+            <button v-on:click="secondCounter++">Increase Second</button>
+
+            <p>Counter : {{ counter }} | {{ secondCounter }}</p>
+
+]=            <p>Result : {{ result() }} | {{ output }}</p>
+        <!-- div 태그를 보면 3개의 버튼이 있고, v-on 디렉티브를 통해 동작을 받아들인다.
+        1, 2번 버튼은 counter 값을 변경시켜주고, 3번 버튼은 secondCounter의 값을 변경해준다.
+        둘다 default 값은 0.
+        -->
+        </div>
+
+        <script>
+
+            new Vue({
+                el: '#app',
+                data: {
+                    counter: 0,
+                    secondCounter: 0
+                },
+                // computed로 실행결과 log를 출력하고, 카운터의 값을 판단해서 True일때 전자 False일때 후자의 값을 리턴한다.
+                computed: {
+                    output: function () {
+                        console.log('Computed');
+                        return this.counter > 5 ? 'Greater 5' : 'Smaller than 5';
+                    }
+
+                },
+                // Method를 통해 computed와 동일한 결과를 보여준다.
+
+                methods : {
+                    result: function () {
+
+                        console.log('Method');
+                        return this.counter > 5 ? 'Greater 5' : 'Smaller than 5';
+                    }
+
+
+                }
+
+             /* 위에서 언급한 바와 같이 Computed와 Method는 동일한 값을 보여주지만, 실행과정에 있어서 method는 매 렌더링마다 실행됨으로서
+                실제 Counter값이 변하지 않았지만 계속 불필요하게 실행이 된다.
+                하지만, Computed의 경우 의존관계를 가지기 때문에 Counter의 값이 변하였을 경우 업데이트가 된다.
+                위처럼 작은 계산의 경우 크게 차이가 없지만 큰 연산이 필요한 경우 Computed와 Methods를 적절한 경우에 사용하는 것이
+                매우 중요하다고 한다. */
+
+
+
+            });
+
+        </script>
+
+    </body>
+
+</html>
